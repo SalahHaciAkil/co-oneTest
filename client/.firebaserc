@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "co-onetest": {
+      "hosting": {
+        "client": [
+          "co-onetest"
+        ]
+      }
+    }
+  }
+}

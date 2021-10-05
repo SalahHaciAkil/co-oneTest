@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 home-intro text-center text-primary mt-2">
+            <h2>Co-one Task</h2>
+        </div>
+
+        <div class="col-12 d-flex justify-content-center align-items-center flex-column photo-upload mt-2">
+            <label class="image-holder" for="photoUpload">
+                <input #file class="d-none" type="file" name="photoUpload" accept='image/*'
+                    (change)="preview(file.files)" id="photoUpload">
+                <img *ngIf="imageUploadFlag" [src]="imgURL" alt="photo" class="img-fluid">
+                <i *ngIf="!imageUploadFlag" class="fa fa-plus add-icon" aria-hidden="true"></i>
+
+            </label>
+            <div class="buttons mt-2" *ngIf="imageUploadFlag">
+                <label for="photoUpload" class="chnage-btn btn btn-outline-primary me-2">Change-photo</label>
+                <button (click)="uploadPhoto()" class="chnage-btn btn btn-outline-primary">Upload-photo</button>
+            </div>
+        </div>
+    </div>
+</div>
