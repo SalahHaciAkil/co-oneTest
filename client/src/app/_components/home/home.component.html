@@ -1,6 +1,41 @@
 <div class="container">
-    <div class="row">
-        <div class="col-12 home-intro text-center text-primary mt-2">
+    <div class="row justify-content-center align-items-center">
+
+        <div class="row ui-holder">
+            <div style="border-right: 1px solid #0000002e;" class="col-md-8 col-6 p-2">
+                <label style="margin-top: 40px;" class="image-holder text-center d-flex flex-column justify-content-center align-items-center"
+                    for="photoUpload">
+                    <div [class.imgBx]="imgURL">
+                        <img class="img-fluid" [src]="imgURL ? imgURL :'../../../assets/add-image.png'" alt="photo">
+                    </div>
+                    <label *ngIf="imgURL" (click)="uploadFile(file.files)"
+                        class="btn btn-primary fw-light fs-5 mt-2">Upload
+                        image</label>
+
+                    <input #file class="d-none" type="file" name="photoUpload" accept='image/*'
+                        (change)="preview(file.files)" id="photoUpload">
+
+                </label>
+            </div>
+
+            <div class="col-md-4 col-6 row" style="overflow: hidden;">
+                <p *ngIf="filesRecoed.length <= 0" class="fw-light fs-2 text-center">No images</p>
+                <div class="files" *ngIf="filesRecoed.length > 0">
+                    <div>
+                        <div class="fileData mt-2" *ngFor="let file of filesRecoed; index as i; last as isLast">
+                            <img class="img-fluid h-100" [src]="file?.downloadURL" alt="photo">
+                            <button class="btn btn-danger btn-sm mt-2" (click)="deleteFile(file.id)">delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <!-- <div class="col-12 home-intro text-center text-primary mt-2">
             <h2>Co-one Task</h2>
         </div>
 
@@ -14,8 +49,8 @@
             </label>
             <div class="buttons mt-2" *ngIf="imageUploadFlag">
                 <label for="photoUpload" class="chnage-btn btn btn-outline-primary me-2">Change-photo</label>
-                <button (click)="uploadPhoto()" class="chnage-btn btn btn-outline-primary">Upload-photo</button>
+                <button (click)="uploadPhoto(file.files)" class="chnage-btn btn btn-outline-primary">Upload-photo</button>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>

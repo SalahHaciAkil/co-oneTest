@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ToastrService } from 'ngx-toastr';
+import { FileRecord } from 'src/app/_interfaces/FileRecord';
+import { CrudService } from 'src/app/_services/crud.service';
+
 
 @Component({
   selector: 'app-home',
@@ -7,17 +10,70 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  filesRecoed: FileRecord[] = [];
   public imagePath;
   imgURL: any;
   public message: string;
   imageUploadFlag = false;
-
-  constructor(private store: AngularFirestore) { }
+  constructor(private crudService: CrudService, private toast:ToastrService) {
+  }
 
   ngOnInit(): void {
+    this.getFiles();
   }
 
 
+
+
+  uploadFile(files) {
+    let photoFile = files[0];
+    this.crudService.startUpload(photoFile).subscribe(data => {
+      this.getFiles();
+      this.imgURL = undefined;
+      this.toast.success("Uploaded successfully");
+      // this.getFile(data.ref.name);
+
+    })
+
+
+
+
+  }
+
+  getFiles() {
+    this.filesRecoed = [];
+    this.crudService.getFiles().subscribe(actionArray => {
+
+      this.filesRecoed = actionArray.map(file => {
+        return {
+          id: file.payload.doc.id,
+          ...file.payload.doc.data() as {}
+        } as FileRecord
+      });
+
+      console.log(this.filesRecoed);
+
+
+    })
+
+  }
+
+  deleteFile(id: string) {
+    this.crudService.deleteFileFromStore(id).then(res => {
+    }, error => {
+      console.log(error);
+
+    });
+
+
+    this.crudService.deleteFileFromStorage(`uploads/${id}`).subscribe((res) => {
+
+    }, error => {
+      console.log(error);
+
+    })
+
+  }
   preview(files) {
     if (files.length === 0)
       return;
@@ -28,11 +84,6 @@ export class HomeComponent implements OnInit {
       this.message = "Only images are supported.";
       return;
     }
-
-    //append the image file
-    // let fileToUpload = <File>files[0];
-    // this.formData.append('photo', fileToUpload, fileToUpload.name);
-
     let reader = new FileReader();
     this.imagePath = files;
     reader.readAsDataURL(files[0]);
@@ -41,10 +92,5 @@ export class HomeComponent implements OnInit {
     }
 
     this.imageUploadFlag = true;
-  }
-
-  uploadPhoto(){
-    this.store.collection
-    
   }
 }
