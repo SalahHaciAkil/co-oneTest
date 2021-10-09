@@ -51,9 +51,6 @@ export class HomeComponent implements OnInit {
         } as FileRecord
       });
 
-      console.log(this.filesRecoed);
-
-
     })
 
   }
