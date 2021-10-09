@@ -1,9 +1,12 @@
 <div class="container">
+    <div class="h2 text-center mt-3 fw-bold text-light fs-1">Co-one Test</div>
+    <p class="fw-light fs-4 lh-lg text-center text-light">Upload a new image by clicking on the add illustartion</p>
     <div class="row justify-content-center align-items-center">
 
         <div class="row ui-holder">
             <div style="border-right: 1px solid #0000002e;" class="col-md-8 col-6 p-2">
-                <label style="margin-top: 80px;" class="image-holder text-center d-flex flex-column justify-content-center align-items-center"
+                <label style="margin-top: 80px;"
+                    class="image-holder text-center d-flex flex-column justify-content-center align-items-center"
                     for="photoUpload">
                     <div [class.imgBx]="imgURL">
                         <img class="img-fluid" [src]="imgURL ? imgURL :'../../../assets/add-image.png'" alt="photo">
@@ -18,7 +21,7 @@
                 </label>
             </div>
 
-            <div class="col-md-4 col-6 row" style="overflow: hidden;">
+            <div class="col-md-4 col-6 row" style="overflow: auto;height: 100%;">
                 <p *ngIf="filesRecoed.length <= 0" class="fw-light fs-2 text-center">No images</p>
                 <div class="files" *ngIf="filesRecoed.length > 0">
                     <div>

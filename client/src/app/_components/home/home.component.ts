@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FileRecord } from 'src/app/_interfaces/FileRecord';
+import { BusyService } from 'src/app/_services/busy.service';
 import { CrudService } from 'src/app/_services/crud.service';
 
 
@@ -15,10 +16,11 @@ export class HomeComponent implements OnInit {
   imgURL: any;
   public message: string;
   imageUploadFlag = false;
-  constructor(private crudService: CrudService, private toast:ToastrService) {
+  constructor(private crudService: CrudService, private toast: ToastrService, private busyService: BusyService) {
   }
 
   ngOnInit(): void {
+
     this.getFiles();
   }
 
@@ -27,9 +29,11 @@ export class HomeComponent implements OnInit {
 
   uploadFile(files) {
     let photoFile = files[0];
+    this.busyService.play();
     this.crudService.startUpload(photoFile).subscribe(data => {
       this.getFiles();
       this.imgURL = undefined;
+      this.busyService.idle();
       this.toast.success("Uploaded successfully");
       // this.getFile(data.ref.name);
 
