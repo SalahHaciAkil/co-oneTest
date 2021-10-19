@@ -4,6 +4,4 @@ export interface FileRecord{
     originalName:string;
     storagePath:string;
     timestamp:string;
-
-
 }

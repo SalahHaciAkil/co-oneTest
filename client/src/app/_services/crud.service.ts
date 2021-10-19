@@ -32,7 +32,8 @@ export class CrudService {
     let safeName = file.name.replace(/([^a-z0-9.]+)/gi, '');   // file name stripped of spaces and special chars
     let timestamp = Date.now();                                     // ex: '1598066351161'
     const uniqueSafeName = timestamp + '_' + safeName;
-    const path = 'uploads/' + uniqueSafeName;                       // Firebase storage path
+    const path = 'uploads/' + uniqueSafeName;      
+                     // Firebase storage path
     const ref = this.storage.ref(path);                             // reference to storage bucket
     this.task = this.storage.upload(path, file);
     this.snapshot = this.task.snapshotChanges().pipe(
